@@ -8,7 +8,7 @@ cat("\014")
 options(encoding = "utf-8")
 
 # Package management
-install.packages("pacman")
+#install.packages("pacman")
 library("pacman")
 
 # Install and load rvest
