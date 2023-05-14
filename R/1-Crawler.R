@@ -33,8 +33,9 @@ remDr$screenshot(display = TRUE)
 pagina <- remDr$getPageSource()[[1]]
 
 # We will select the comments
-resenas <- remDr$findElement(using = 'css selector', 
-                             "#__next > main > div > section.ipc-page-background.ipc-page-background--base.sc-c7f03a63-0.kUbSjY > section > div:nth-child(4) > section > section > div.sc-10602b09-2.jzJCdt > div.sc-10602b09-10.TKmtG > div.sc-10602b09-5.kBrxsq > ul > li:nth-child(1) > a > span > span.label")
+resenas <- remDr$findElement(using = 'xpath', 
+                             '//*[@id="__next"]/main/div/section[1]/section/div[3]/section/section/div[3]/div[2]/div[2]/ul/li[1]/a/span/span[2]')
+
 # And click on those
 resenas$clickElement()
 
@@ -48,7 +49,7 @@ remDr$goForward()
 remDr$screenshot(display = TRUE) 
 
 # Let's get the comments
-comments <-xml2::read_html(remDr$getPageSource()[[1]]) %>% # Extraemos el c贸digo HTML
+comments <-xml2::read_html(remDr$getPageSource()[[1]]) %>%
   html_nodes(xpath = '//*[@id="main"]/section/div[2]/div[2]') %>% html_text()
 comments
 
@@ -59,7 +60,7 @@ remDr$screenshot(display = TRUE)
 # We will select the search box
 input <- remDr$findElement(using = 'css selector', "#twotabsearchtextbox")
 
-# And do a targheted search
+# And do a targeted search
 input$sendKeysToElement(list("Laptop Computer"))
 btn <- remDr$findElement(using = 'css selector',"#nav-search-submit-button")
 btn$clickElement() # Click on search
@@ -67,7 +68,7 @@ btn$clickElement() # Click on search
 # See the outcome
 remDr$screenshot(display = TRUE)
 
-# We can check those elements programatically to track if they change prices, for example
+# We can check those elements via crawler to track if they change prices, for example
 pagina<-remDr$getCurrentUrl()[[1]][1]%>% read_html()
 
 # Let's close the connection
