@@ -16,7 +16,7 @@ pacman::p_load("rvest")
 
 # IMDB
 
-# (1) read_html
+# read_html
 peliculaLego <- read_html("http://www.imdb.com/title/tt1490017/")
 
 # Selector: 

@@ -15,7 +15,6 @@ library("pacman")
 pacman::p_load("rvest")
 # Data manipulation
 pacman::p_load(dplyr)
-
 pacman::p_load("hrbrthemes")
 
 # Lets look for some tabular data from Perú
@@ -72,11 +71,9 @@ names(tabla)<-c("posicion","paisRico","pibPaisRico","paisPobre","pibPaisPobre","
 
 # Clean the data
 tabla$pibPaisRico <- gsub(',', '', tabla$pibPaisRico)
-tabla$pibPaisRico <- gsub("[[:blank:]]", "",tabla$pibPaisRico)
 tabla$pibPaisRico <- as.numeric(tabla$pibPaisRico)
 
 tabla$pibPaisPobre <- gsub(',', '', tabla$pibPaisPobre)
-tabla$pibPaisPobre <- gsub("[[:blank:]]", "",tabla$pibPaisPobre)
 tabla$pibPaisPobre <- as.numeric(tabla$pibPaisPobre)
 
 # Let's take top 30
