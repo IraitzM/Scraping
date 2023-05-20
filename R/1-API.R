@@ -13,11 +13,13 @@ library("pacman")
 
 # Libraries
 pacman::p_load(httr) # API call enabler
+pacman::p_load(rvest) # API call enabler
 pacman::p_load(jsonlite) # JSON object manipulation
 pacman::p_load(dplyr) # Data cleansing
 pacman::p_load(ggplot2) # Plots
 pacman::p_load(gganimate) # Animations
 pacman::p_load(forcats) # Factor treatment
+pacman::p_load(leaflet) # Maps
 
 # API: datos.gob.es
 url  <- "https://datos.gob.es/apidata/catalog/dataset"
@@ -63,7 +65,7 @@ names <- read_html(url) %>%
   html_nodes("#all-state-vectors")  %>% 
   html_nodes("#response")  %>% 
   html_nodes('.docutils') %>% 
-  html_table()
+  rvest::html_table()
 
 # Assign names
 colnames(df) <- names[[2]]$Property
@@ -74,9 +76,6 @@ data <- as.data.frame(df, stringsAsFactors = FALSE)
 
 # We can store this information
 write.csv(data, "planes.csv", row.names = FALSE)
-
-# Let's do some nice visualization
-pacman::p_load(leaflet)
 
 # Some data may need to be converted
 data$longitude <- as.numeric(data$longitude)
