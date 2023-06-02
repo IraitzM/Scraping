@@ -12,6 +12,8 @@ options(encoding = "utf-8")
 library("pacman")
 
 pacman::p_load(httr) # REST functions
+pacman::p_load(RCurl) # Curl requests
+pacman::p_load(jsonlite) # JSON
 
 # Remember to obtain you TOKEN from the Developer portal
 # > https://developer.twitter.com/en/docs/tutorials/step-by-step-guide-to-making-your-first-request-to-the-twitter-api-v2
@@ -43,7 +45,8 @@ r <- POST(base_url,
            "Content-Type" = 'application/x-www-form-urlencoded;charset=UTF-8'))
 r$status_code
 response <- content(r, as = "text", encoding = "UTF-8")
-token <- rjson::fromJSON(response)$access_token
+token <- fromJSON(response)$access_token
+token
 
 ### Search
 # > https://developer.twitter.com/en/docs/twitter-api/tweets/search/introduction
@@ -69,19 +72,28 @@ response <- content(r, as = "text", encoding = "UTF-8")
 response
 
 # Get structured data
-tweets <- fromJSON(response)$data
-tweet_df <- do.call(rbind, lapply(tweets, as.data.frame))
+tweets_df <- fromJSON(response)$data
 
 # Check it, every time we ask, it changes
+
+# Packages
+pacman::p_load(rtweet) # https://www.rdocumentation.org/packages/rtweet/versions/1.1.0
+
+# Auth
+vignette("auth", "rtweet")
+auth <- rtweet_app()
+
+tweets_df <- search_tweets(query, n = 1000, token = auth)
 
 # Processing text
 pacman::p_load("wordcloud")
 pacman::p_load("RColorBrewer")
 pacman::p_load("wordcloud2")
 pacman::p_load(tidytext)
+pacman::p_load(magrittr)
 
 # Create a vector containing only the text
-text <- tweet_df$text
+text <- tweets_df$text
 
 # Clean text (regex)
 text <- gsub("https\\S*", "", text) 
@@ -90,7 +102,7 @@ text <- gsub("amp", "", text)
 text <- gsub("[\r\n]", "", text)
 text <- gsub("[[:punct:]]", "", text)
 
-tweets_words <-  tweet_df %>%
+tweets_words <-  tweets_df %>%
   dplyr::select(text) %>%
   unnest_tokens(word, text)
 words <- tweets_words %>% dplyr::count(word, sort=TRUE)
