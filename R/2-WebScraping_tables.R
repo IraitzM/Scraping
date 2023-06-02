@@ -15,7 +15,6 @@ library("pacman")
 pacman::p_load("rvest")
 # Data manipulation
 pacman::p_load(dplyr)
-pacman::p_load("hrbrthemes")
 
 # Lets look for some tabular data from Perú
 url <- "https://es.wikipedia.org/wiki/Departamentos_del_Per%C3%BA"
