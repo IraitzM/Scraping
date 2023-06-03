@@ -14,6 +14,7 @@ library("pacman")
 # Libraries
 pacman::p_load(xml2) # XML
 pacman::p_load(magrittr) # Piping
+pacman::p_load(rvest)
 
 # Load an XML file
 xmlimport <- xml2::read_xml("data/bookstore.xml")

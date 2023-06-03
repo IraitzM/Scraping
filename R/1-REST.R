@@ -11,6 +11,9 @@ options(encoding = "utf-8")
 #install.packages("pacman")
 library("pacman")
 
+# Plumber
+pacman::p_load(plumber)
+
 # Launch a local server
 source("R/RESTserver/launcher.R")
 start_plumber("R/RESTserver/server.R",9999)
