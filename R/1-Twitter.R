@@ -24,7 +24,7 @@ api <- 'https://api.twitter.com/'
 # Getting the token automatically
 # > https://developer.twitter.com/en/docs/authentication/api-reference/token
 api_key <- '<API_KEY>'
-api_secret <- '<API_SECRET'
+api_secret <- '<API_SECRET>'
 
 # POST oauth2
 endpoint <- 'oauth2/token'
